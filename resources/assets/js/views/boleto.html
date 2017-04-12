@@ -1,0 +1,245 @@
+<div class="container-fuid">
+    <div class="row">
+        <div class="linhacinza">
+            <br>
+            <div class="container">
+                <h2 class="msgm">INSCRIÇÃO</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: 20px;">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table package-table">
+
+                        <thead>
+                        <tr class="trcat">
+                            <td colspan="2">CATEGORIA</td>
+                            <td>ATÉ 15/05</td>
+                            <td>NO LOCAL</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div class="radio">
+                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="200" checked required>MÉDICOS</label>
+                                </div>
+                            </td>
+                            <td>
+                                <label class="valoresBoleto"> R$200,00</label>
+                            </td>
+                            <td>
+                                <label class="valoresBoleto"> R$300,00</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="radio">
+                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="150">RESIDENTES E FELLOWS</label>
+                                </div>
+                            </td>
+                            <td>
+                                <label class="valoresBoleto"> R$150,00</label>
+                            </td>
+                            <td>
+                                <label class="valoresBoleto"> R$200,00</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="radio">
+                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="80">ACADÊMICOS</label>
+                                </div>
+                            </td>
+                            <td>
+                                <label class="valoresBoleto"> 20 PRIMEIRAS: GRATUITO</label>
+                            </td>
+                            <td>
+                                <label class="valoresBoleto"> R$80,00</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="radio">
+                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="0">MÉDICOS ACIMA DE 70 ANOS</label>
+                                </div>
+                            </td>
+                            <td colspan="2" align="center">
+                                <label class="valoresBoleto"> ISENTO</label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <form method="post" name="formBoleto" action="https://geraboleto.sicoobnet.com.br/geradorBoleto/GerarBoleto.do">
+                <!-- Código Cliente:-->
+                <input name="numCliente" ng-model="numCliente" type="hidden" value="145025" size="15" />
+                <!-- Coop. cartão: -->
+                <input name="coopCartao" ng-model="coopCartao" type="hidden" value="5004" size="15" />
+                <!-- Chave acesso web: -->
+                <input name="chaveAcessoWeb" ng-model="chaveAcessoWeb" type="hidden" value="DEFBF33A-E701-4C71-AB46-4D4A1D3459B2" size="25" />
+                <!-- Número Conta:-->
+                <input name="numContaCorrente" ng-model="numContaCorrente" type="hidden" value="1057596" size="15" />
+                <!-- Código. Município:-->
+                <input name="codMunicipio" ng-model="codMunicipio" type="hidden" value="26242" size="15" />
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" size="25" maxlength="50" name="nomeSacado" ng-model="nomeSacado" placeholder="Nome" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="nome_cracha" placeholder="Nome p/ Crachá" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <select class="form-control group" ng-model="prescritor" required>
+                            <option value="">Prescritor</option>
+                            <option value="1">Sim</option>
+                            <option value="0">Não</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="num_conselho" placeholder="Numero Conselho" required>
+                    </div>
+                    <div class="col-md-4 form-group">
+                        <select class="form-control group" ng-model="uf_conselho" required>
+                            <option value="">UF Conselho</option>
+                            <option value="AC">AC</option>
+                            <option value="AL">AL</option>
+                            <option value="AM">AM</option>
+                            <option value="AP">AP</option>
+                            <option value="BA">BA</option>
+                            <option value="CE">CE</option>
+                            <option value="DF">DF</option>
+                            <option value="ES">ES</option>
+                            <option value="GO">GO</option>
+                            <option value="MA">MA</option>
+                            <option value="MG">MG</option>
+                            <option value="MS">MS</option>
+                            <option value="MT">MT</option>
+                            <option value="PA">PA</option>
+                            <option value="PB">PB</option>
+                            <option value="PE">PE</option>
+                            <option value="PI">PI</option>
+                            <option value="PR">PR</option>
+                            <option value="RJ">RJ</option>
+                            <option value="RN">RN</option>
+                            <option value="RO">RO</option>
+                            <option value="RR">RR</option>
+                            <option value="RS">RS</option>
+                            <option value="SC">SC</option>
+                            <option value="SE">SE</option>
+                            <option value="SP">SP</option>
+                            <option value="TO">TO</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" size="10" maxlength="14" name="cpfCGC" ng-model="cpfCGC" placeholder="CPF/CNPJ (sem pontuação)" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" name="dataNascimento" ng-model="dataNascimento" type="text" size="5" placeholder="Data Nascimento">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control group" size="15" maxlength="20" name="endereco" ng-model="endereco" placeholder="Endereço" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" size="10" maxlength="15" name="bairro" ng-model="bairro" placeholder="Bairro" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" size="15" maxlength="15" name="cidade" ng-model="cidade" placeholder="Cidade" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" size="8" maxlength="8" name="cep" ng-model="cep" placeholder="CEP" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <input type="text" class="form-control group" size="5" maxlength="2" name="uf" ng-model="uf" placeholder="UF" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <input type="text" class="form-control group" size="5" name="ddd" ng-model="ddd" placeholder="DDD">
+                    </div>
+                    <div class="col-md-9 form-group">
+                        <input type="text" class="form-control group" size="10" name="telefone" ng-model="telefone" placeholder="Telefone">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <input type="text" class="form-control group" name="email" ng-model="email" type="text" size="25" placeholder="Email">
+                    </div>
+                </div>
+
+                <!-- Recebe email: -->
+                <input name="bolRecebeBoletoEletronico" type="hidden" value="1" size="3" value="1" />
+                <!-- Código espécie documento: -->
+                <input name="codEspDocumento" type="hidden" value="DS" size="5" />
+                <!-- Data emissão: -->
+                <input name="dataEmissao" type="hidden" size="5" value="{{boleto.dataEmissao}}" />
+                <!-- Seu número:-->
+                <!--<input name="seuNumero" type="hidden" size="25" value="" />-->
+                <!-- Nome sacador: -->
+                <input name="nomeSacador" type="hidden" size="25" value="{{boleto.nomeSacador}}" />
+                <!-- CGC/CPF Sacador:-->
+                <input name="numCGCCPFSacador" type="hidden" size="25" value="{{boleto.numCGCCPFSacador}}" />
+                <!-- Quantidade Monetária: -->
+                <input name="qntMonetaria" type="hidden" size="5" value="{{boleto.valor}}" />
+                <!-- Valor título:-->
+                <input name="valorTitulo" type="hidden" size="5" value="{{boleto.valor}}" />
+                <!-- Código tipo vencimento:-->
+                <input name="codTipoVencimento" type="hidden" value="1" size="5" value="1" />
+                <!-- Data vencimento:-->
+                <input name="dataVencimentoTit" type="hidden" size="5" value="{{boleto.dataVencimentoTit}}" />
+                <!-- Valor abatimento:-->
+                <!--<input name="valorAbatimento" type="hidden" value="0" size="5">-->
+                <!-- Valor IOF:-->
+                <!--<input name="valorIOF" type="hidden" value="0" size="5" value="" />-->
+                <!-- Aceite:-->
+                <input name="bolAceite" type="hidden" value="1" size="5" value="1" />
+                <!-- Percentual taxa multa: -->
+                <!--<input name="percTaxaMulta" type="hidden" value="0" value="" />-->
+                <!-- Percentual taxa mora: -->
+                <!--<input name="percTaxaMora" type="hidden" value="0" size="5" value="" />-->
+                <!-- Data primeiro desconto:-->
+                <!--<input name="dataPrimDesconto" type="hidden" value="" />-->
+                <!-- Valor primeiro desconto: -->
+                <!--<input name="valorPrimDesconto" type="hidden" value="0" size="5" value="" />-->
+                <!-- Data segundo desconto:-->
+                <!--<input name="dataSegDesconto" type="hidden" value="" />-->
+                <!-- Valor segundo desconto:-->
+                <!--<input name="valorSegDesconto" type="hidden" value="0" size="5" value="" />-->
+                <!-- Instrução 1: -->
+                <input name="descInstrucao1" type="hidden" size="25" value="{{boleto.descInstrucao1}}" />
+                <!-- Instrução 2:-->
+                <input name="descInstrucao2" type="hidden" size="25" value="{{boleto.descInstrucao2}}" />
+                <!-- Instrução 4:-->
+                <input name="descInstrucao4" type="hidden" size="25" value="{{boleto.descInstrucao3}}" />
+                <!-- Instrução 3: -->
+                <input name="descInstrucao3" type="hidden" size="25" value="{{boleto.descInstrucao4}}" />
+                <!-- Instrução 5: -->
+                <input name="descInstrucao5" type="hidden" size="25" value="{{boleto.descInstrucao5}}" />
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary right">Enviar</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
