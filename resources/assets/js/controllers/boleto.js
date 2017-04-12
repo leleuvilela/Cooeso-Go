@@ -1,5 +1,5 @@
 angular.module('app.controllers')
-    .controller('BoletoController', ['$scope', '$cookies', function ($scope, $cookies) {
+    .controller('BoletoController', ['$scope', '$cookies', '$http', function ($scope, $cookies, $http) {
         console.log($cookies.getObject('user'));
 
         getStringDate = function(date){
@@ -25,6 +25,11 @@ angular.module('app.controllers')
         vencimento = getStringDate(vencimento);
 
         $scope.boleto = {
+            numCliente: "145025",
+            coopCartao: "5004",
+            chaveAcessoWeb: "DEFBF33A-E701-4C71-AB46-4D4A1D3459B2",
+            numContaCorrente: "1057596",
+            codMunicipio: "26242",
             dataEmissao: hoje,
             nomeSacador: "COOPERATIVA ESTADUAL DE SERVICOS EM OFTALMOLOGIA",
             numCGCCPFSacador: "19213714000106",
@@ -36,10 +41,17 @@ angular.module('app.controllers')
             descInstrucao5: "asdfasdf"
         }
 
-
-
-
-
-
+        $scope.enviar = function(){
+            console.log($scope.boleto);
+            $http({
+                method  : 'POST',
+                url     : 'https://geraboleto.sicoobnet.com.br/geradorBoleto/GerarBoleto.do',
+                data    : $scope.boleto, //forms user object
+                headers : {'Content-Type': 'application/x-www-form-urlencoded'}
+            })
+                .success(function(data) {
+                    console.log(data);
+                });
+        }
 
     }]);
