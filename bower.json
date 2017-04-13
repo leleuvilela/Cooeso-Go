@@ -26,6 +26,9 @@
     "bootstrap": "^3.3.7",
     "angular-oauth2": "3.0.1",
     "angular-cookies": "1.4",
-    "gentelella": "^1.4.0"
+    "gentelella": "^1.4.0",
+    "angular-ui-mask": "1.4.*",
+    "angular-input-masks": "^2.5.0",
+    "ngMask": "angular-mask#^3.1.1"
   }
 }

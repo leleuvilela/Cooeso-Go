@@ -77,38 +77,38 @@
                     </table>
                 </div>
             </div>
-            <form method="post" name="formBoleto" ng-submit="enviar()" action="https://geraboleto.sicoobnet.com.br/geradorBoleto/GerarBoleto.do">
+            <form method="post" name="formBoleto" id="formBoleto" target="_blank" action="https://geraboleto.sicoobnet.com.br/geradorBoleto/GerarBoleto.do">
                 <!-- Código Cliente:-->
-                <input name="numCliente" ng-model="boleto.numCliente" type="hidden"  value="145025" size="15" />
+                <input name="numCliente" type="hidden"  value="{{boleto.numCliente}}" size="15" />
                 <!-- Coop. cartão: -->
-                <input name="coopCartao" ng-model="boleto.coopCartao" type="hidden"  value="5004" size="15" />
+                <input name="coopCartao" type="hidden"  value="{{boleto.coopCartao}}" size="15" />
                 <!-- Chave acesso web: -->
-                <input name="chaveAcessoWeb" ng-model="boleto.chaveAcessoWeb" type="hidden"  value="DEFBF33A-E701-4C71-AB46-4D4A1D3459B2" size="25" />
+                <input name="chaveAcessoWeb" type="hidden"  value="{{boleto.chaveAcessoWeb}}" size="25" />
                 <!-- Número Conta:-->
-                <input name="numContaCorrente" ng-model="boleto.numContaCorrente" type="hidden"  value="1057596" size="15" />
+                <input name="numContaCorrente" type="hidden"  value="{{boleto.numContaCorrente}}" size="15" />
                 <!-- Código. Município:-->
-                <input name="codMunicipio" ng-model="boleto.codMunicipio" type="hidden"  value="26242" size="15" />
+                <input name="codMunicipio" type="hidden"  value="{{boleto.codMunicipio}}" size="15" />
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="25" maxlength="50" name="nomeSacado" ng-model="boleto.nomeSacado" placeholder="Nome" required>
+                        <input type="text" class="form-control group" size="25" maxlength="50" name="nomeSacado" ng-model="cliente.nome" placeholder="Nome" required>
                     </div>
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="boleto.nome_cracha" placeholder="Nome p/ Crachá" required>
+                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="cliente.nome_cracha" placeholder="Nome p/ Crachá" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 form-group">
-                        <select class="form-control group" ng-model="boleto.prescritor" required>
+                        <select class="form-control group" ng-model="cliente.prescritor" required>
                             <option value="">Prescritor</option>
                             <option value="1">Sim</option>
                             <option value="0">Não</option>
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
-                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="boleto.num_conselho" placeholder="Numero Conselho" required>
+                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="cliente.num_conselho" placeholder="Numero Conselho" required>
                     </div>
                     <div class="col-md-4 form-group">
-                        <select class="form-control group" ng-model="boleto.uf_conselho" required>
+                        <select class="form-control group" ng-model="cliente.uf_conselho" required>
                             <option value="">UF Conselho</option>
                             <option value="AC">AC</option>
                             <option value="AL">AL</option>
@@ -143,97 +143,133 @@
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="10" maxlength="14" name="cpfCGC" ng-model="boleto.cpfCGC" placeholder="CPF/CNPJ (sem pontuação)" required>
+                        <input type="text" class="form-control group" size="10" maxlength="14" name="cpfCGC" ng-model="cliente.cpf"  placeholder="CPF/CNPJ" mask-clean='true' mask='999.999.999-99'>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" name="dataNascimento" ng-model="boleto.dataNascimento" type="text" size="5" placeholder="Data Nascimento">
+                    <div class="col-md-6">
+                        <p class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="cliente.data_nascimento" is-open="data_nascimento.status.opened" close-text="Close" required/>
+                            <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        </p>
+                        <input type="hidden" name="dataNascimento" type="hidden" value="{{cliente.data_nascimento_validada}}" >
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <input type="text" class="form-control group" size="15" maxlength="20" name="endereco" ng-model="boleto.endereco" placeholder="Endereço" required>
+                        <input type="text" class="form-control group" size="15" maxlength="40" name="endereco" ng-model="cliente.endereco" placeholder="Endereço" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="10" maxlength="15" name="bairro" ng-model="boleto.bairro" placeholder="Bairro" required>
+                        <input type="text" class="form-control group" size="10" maxlength="15" name="bairro" ng-model="cliente.bairro" placeholder="Bairro" required>
                     </div>
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="15" maxlength="15" name="cidade" ng-model="boleto.cidade" placeholder="Cidade" required>
+                        <input type="text" class="form-control group" size="15" maxlength="15" name="cidade" ng-model="cliente.cidade" placeholder="Cidade" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="8" maxlength="8" name="cep" ng-model="boleto.cep" placeholder="CEP" required>
+                        <input type="text" class="form-control group" size="8" name="cep" ng-model="cliente.cep" placeholder="CEP" required mask-clean='true' mask='99.999-999'>
                     </div>
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="5" maxlength="2" name="uf" ng-model="boleto.uf" placeholder="UF" required>
+                        <select class="form-control group" ng-model="cliente.uf" required>
+                            <option value="">UF</option>
+                            <option value="AC">AC</option>
+                            <option value="AL">AL</option>
+                            <option value="AM">AM</option>
+                            <option value="AM">AM</option>
+                            <option value="AP">AP</option>
+                            <option value="BA">BA</option>
+                            <option value="CE">CE</option>
+                            <option value="DF">DF</option>
+                            <option value="ES">ES</option>
+                            <option value="GO">GO</option>
+                            <option value="MA">MA</option>
+                            <option value="MG">MG</option>
+                            <option value="MS">MS</option>
+                            <option value="MT">MT</option>
+                            <option value="PA">PA</option>
+                            <option value="PB">PB</option>
+                            <option value="PE">PE</option>
+                            <option value="PI">PI</option>
+                            <option value="PR">PR</option>
+                            <option value="RJ">RJ</option>
+                            <option value="RN">RN</option>
+                            <option value="RO">RO</option>
+                            <option value="RR">RR</option>
+                            <option value="RS">RS</option>
+                            <option value="SC">SC</option>
+                            <option value="SE">SE</option>
+                            <option value="SP">SP</option>
+                            <option value="TO">TO</option>
+                        </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 form-group">
-                        <input type="text" class="form-control group" size="5" name="ddd" ng-model="boleto.ddd" placeholder="DDD">
+                        <input type="text" class="form-control group" size="5" name="ddd" ng-model="cliente.ddd" placeholder="DDD" mask-clean='true' mask='99'>
                     </div>
                     <div class="col-md-9 form-group">
-                        <input type="text" class="form-control group" size="10" name="telefone" ng-model="boleto.telefone" placeholder="Telefone">
+                        <input type="text" class="form-control group" size="10" name="telefone" ng-model="cliente.telefone"  placeholder="Telefone" mask="9?9999-9999">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 form-group">
-                        <input type="text" class="form-control group" name="email" ng-model="boleto.email" type="text" size="25" placeholder="Email">
+                        <input type="text" class="form-control group" name="email" ng-model="cliente.email" type="text" size="25" placeholder="Email">
                     </div>
                 </div>
 
                 <!-- Recebe email: -->
-                <input name="bolRecebeBoletoEletronico" ng-model="boleto.bolRecebeBoletoEletronico" type="hidden"  value="1" size="3" value="1" />
+                <input name="bolRecebeBoletoEletronico" type="hidden"  value="1" size="3" value="{{boleto.bolRecebeBoletoEletronico}}" />
                 <!-- Código espécie documento: -->
-                <input name="codEspDocumento" ng-model="boleto.codEspDocumento" type="hidden"  value="DS" size="5" />
+                <input name="codEspDocumento" type="hidden"  value="DS" size="{{boleto.codEspDocumento}}" />
                 <!-- Data emissão: -->
-                <input name="dataEmissao" ng-model="boleto.dataEmissao" type="hidden"  size="5" value="{{boleto.dataEmissao}}" />
+                <input name="dataEmissao" type="hidden"  size="5" value="{{boleto.dataEmissao}}" />
                 <!-- Seu número:-->
-                <!--<input name="seuNumero" ng-model="boleto.seuNumero" type="hidden"  size="25" value="" />-->
+                <!--<input name="seuNumero" type="hidden"  size="25" value="" />-->
                 <!-- Nome sacador: -->
-                <input name="nomeSacador" ng-model="boleto.nomeSacador" type="hidden"  size="25" value="{{boleto.nomeSacador}}" />
+                <input name="nomeSacador" type="hidden"  size="25" value="{{boleto.nomeSacador}}" />
                 <!-- CGC/CPF Sacador:-->
-                <input name="numCGCCPFSacador" ng-model="boleto.numCGCCPFSacador" type="hidden"  size="25" value="{{boleto.numCGCCPFSacador}}" />
+                <input name="numCGCCPFSacador" type="hidden"  size="25" value="{{boleto.numCGCCPFSacador}}" />
                 <!-- Quantidade Monetária: -->
-                <input name="qntMonetaria" ng-model="boleto.qntMonetaria" type="hidden"  size="5" value="{{boleto.valor}}" />
+                <input name="qntMonetaria" type="hidden"  size="5" value="{{boleto.valor}}" />
                 <!-- Valor título:-->
-                <input name="valorTitulo" ng-model="boleto.valorTitulo" type="hidden"  size="5" value="{{boleto.valor}}" />
+                <input name="valorTitulo" type="hidden"  size="5" value="{{boleto.valor}}" />
                 <!-- Código tipo vencimento:-->
-                <input name="codTipoVencimento" ng-model="boleto.codTipoVencimento" type="hidden"  value="1" size="5" value="1" />
+                <input name="codTipoVencimento" type="hidden"  value="1" size="5" value="{{boleto.codTipoVencimento}}" />
                 <!-- Data vencimento:-->
-                <input name="dataVencimentoTit" ng-model="boleto.dataVencimentoTit" type="hidden"  size="5" value="{{boleto.dataVencimentoTit}}" />
+                <input name="dataVencimentoTit" type="hidden"  size="5" value="{{boleto.dataVencimentoTit}}" />
                 <!-- Valor abatimento:-->
-                <!--<input name="valorAbatimento" ng-model="boleto.valorAbatimento" type="hidden"  value="0" size="5">-->
+                <!--<input name="valorAbatimento" type="hidden"  value="0" size="5">-->
                 <!-- Valor IOF:-->
-                <!--<input name="valorIOF" ng-model="boleto.valorIOF" type="hidden"  value="0" size="5" value="" />-->
+                <!--<input name="valorIOF" type="hidden"  value="0" size="5" value="" />-->
                 <!-- Aceite:-->
-                <input name="bolAceite" ng-model="boleto.bolAceite" type="hidden"  value="1" size="5" value="1" />
+                <input name="bolAceite" type="hidden"  value="1" size="5" value="{{boleto.bolAceite}}" />
                 <!-- Percentual taxa multa: -->
-                <!--<input name="percTaxaMulta" ng-model="boleto.percTaxaMulta" type="hidden"  value="0" value="" />-->
+                <!--<input name="percTaxaMulta" type="hidden"  value="0" value="" />-->
                 <!-- Percentual taxa mora: -->
-                <!--<input name="percTaxaMora" ng-model="boleto.percTaxaMora" type="hidden"  value="0" size="5" value="" />-->
+                <!--<input name="percTaxaMora" type="hidden"  value="0" size="5" value="" />-->
                 <!-- Data primeiro desconto:-->
-                <!--<input name="dataPrimDesconto" ng-model="boleto.dataPrimDesconto" type="hidden"  value="" />-->
+                <!--<input name="dataPrimDesconto" type="hidden"  value="" />-->
                 <!-- Valor primeiro desconto: -->
-                <!--<input name="valorPrimDesconto" ng-model="boleto.valorPrimDesconto" type="hidden"  value="0" size="5" value="" />-->
+                <!--<input name="valorPrimDesconto" type="hidden"  value="0" size="5" value="" />-->
                 <!-- Data segundo desconto:-->
-                <!--<input name="dataSegDesconto" ng-model="boleto.dataSegDesconto" type="hidden"  value="" />-->
+                <!--<input name="dataSegDesconto" type="hidden"  value="" />-->
                 <!-- Valor segundo desconto:-->
-                <!--<input name="valorSegDesconto" ng-model="boleto.valorSegDesconto" type="hidden"  value="0" size="5" value="" />-->
+                <!--<input name="valorSegDesconto" type="hidden"  value="0" size="5" value="" />-->
                 <!-- Instrução 1: -->
-                <input name="descInstrucao1" ng-model="boleto.descInstrucao1" type="hidden"  size="25" value="{{boleto.descInstrucao1}}" />
+                <input name="descInstrucao1" type="hidden"  size="25" value="{{boleto.descInstrucao1}}" />
                 <!-- Instrução 2:-->
-                <input name="descInstrucao2" ng-model="boleto.descInstrucao2" type="hidden"  size="25" value="{{boleto.descInstrucao2}}" />
+                <input name="descInstrucao2" type="hidden"  size="25" value="{{boleto.descInstrucao2}}" />
                 <!-- Instrução 4:-->
-                <input name="descInstrucao4" ng-model="boleto.descInstrucao4" type="hidden"  size="25" value="{{boleto.descInstrucao3}}" />
+                <input name="descInstrucao4" type="hidden"  size="25" value="{{boleto.descInstrucao3}}" />
                 <!-- Instrução 3: -->
-                <input name="descInstrucao3" ng-model="boleto.descInstrucao3" type="hidden"  size="25" value="{{boleto.descInstrucao4}}" />
+                <input name="descInstrucao3" type="hidden"  size="25" value="{{boleto.descInstrucao4}}" />
                 <!-- Instrução 5: -->
-                <input name="descInstrucao5" ng-model="boleto.descInstrucao5" type="hidden"  size="25" value="{{boleto.descInstrucao5}}" />
+                <input name="descInstrucao5" type="hidden"  size="25" value="{{boleto.descInstrucao5}}" />
             </form>
-            <div class="row">
+            <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-12">
                     <button ng-click="enviar()" class="btn btn-primary right">Enviar</button>
                 </div>

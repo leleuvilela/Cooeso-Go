@@ -1,5 +1,5 @@
 angular.module('app.controllers')
-    .controller('BoletoController', ['$scope', '$cookies', '$http', function ($scope, $cookies, $http) {
+    .controller('BoletoController', ['$scope', '$cookies', '$http', 'Client', function ($scope, $cookies, $http, Client) {
         console.log($cookies.getObject('user'));
 
         getStringDate = function(date){
@@ -32,6 +32,10 @@ angular.module('app.controllers')
             codMunicipio: "26242",
             dataEmissao: hoje,
             nomeSacador: "COOPERATIVA ESTADUAL DE SERVICOS EM OFTALMOLOGIA",
+            bolRecebeBoletoEletronico: "1",
+            codEspDocumento: "5",
+            codTipoVencimento: "1",
+            bolAceite: "1",
             numCGCCPFSacador: "19213714000106",
             dataVencimentoTit: vencimento,
             descInstrucao1: "bla lba bla",
@@ -39,19 +43,28 @@ angular.module('app.controllers')
             descInstrucao3: "asdf",
             descInstrucao4: "asasdfdf",
             descInstrucao5: "asdfasdf"
-        }
+        };
+        $scope.cliente = new Client();
+
+        $scope.data_nascimento = {
+            status:{
+                opened: false
+            }
+        };
+
+        $scope.open = function ($event){
+            $scope.data_nascimento.status.opened = true;
+        };
+
 
         $scope.enviar = function(){
-            console.log($scope.boleto);
-            $http({
-                method  : 'POST',
-                url     : 'https://geraboleto.sicoobnet.com.br/geradorBoleto/GerarBoleto.do',
-                data    : $scope.boleto, //forms user object
-                headers : {'Content-Type': 'application/x-www-form-urlencoded'}
-            })
-                .success(function(data) {
-                    console.log(data);
+            $scope.cliente.data_nascimento_validada = getStringDate($scope.cliente.data_nascimento);
+            console.log($scope.cliente);
+            if ($scope.formBoleto.$valid){
+                $scope.cliente.$save().then(function () {
+                    document.getElementById("formBoleto").submit();
                 });
+            }
         }
 
     }]);
