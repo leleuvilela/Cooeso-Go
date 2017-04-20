@@ -27,7 +27,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="radio">
-                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="200" checked required>MÉDICOS</label>
+                                    <label><input type="radio" name="categoria" ng-model="categoriaId" value="1" checked required>MÉDICOS</label>
                                 </div>
                             </td>
                             <td>
@@ -40,7 +40,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="radio">
-                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="150">RESIDENTES E FELLOWS</label>
+                                    <label><input type="radio" name="categoria" ng-model="categoriaId" value="2">RESIDENTES E FELLOWS</label>
                                 </div>
                             </td>
                             <td>
@@ -53,7 +53,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="radio">
-                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="80">ACADÊMICOS</label>
+                                    <label><input type="radio" name="categoria" ng-model="categoriaId" value="3">ACADÊMICOS</label>
                                 </div>
                             </td>
                             <td>
@@ -66,7 +66,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="radio">
-                                    <label><input type="radio" name="valor" ng-model="boleto.valor" value="0">MÉDICOS ACIMA DE 70 ANOS</label>
+                                    <label><input type="radio" name="categoria" ng-model="categoriaId" value="0">MÉDICOS ACIMA DE 70 ANOS</label>
                                 </div>
                             </td>
                             <td colspan="2" align="center">
@@ -105,10 +105,10 @@
                         </select>
                     </div>
                     <div class="col-md-4 form-group">
-                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="cliente.num_conselho" placeholder="Numero Conselho" required>
+                        <input type="text" class="form-control group" size="25" maxlength="50" ng-model="cliente.num_conselho" placeholder="Numero Conselho">
                     </div>
                     <div class="col-md-4 form-group">
-                        <select class="form-control group" ng-model="cliente.uf_conselho" required>
+                        <select class="form-control group" name="uf" ng-model="cliente.uf_conselho" required>
                             <option value="">UF Conselho</option>
                             <option value="AC">AC</option>
                             <option value="AL">AL</option>
@@ -143,7 +143,8 @@
 
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="10" maxlength="14" name="cpfCGC" ng-model="cliente.cpf"  placeholder="CPF/CNPJ" mask-clean='true' mask='999.999.999-99'>
+                        <input type="text" class="form-control group" size="10" maxlength="14" ng-model="cliente.cpf"  placeholder="CPF/CNPJ" mask-clean='true' mask='999.999.999-99'>
+                        <input type="hidden" name="cpfCGC" value="{{cliente.cpf}}">
                     </div>
                     <div class="col-md-6">
                         <p class="input-group">
@@ -170,7 +171,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <input type="text" class="form-control group" size="8" name="cep" ng-model="cliente.cep" placeholder="CEP" required mask-clean='true' mask='99.999-999'>
+                        <input type="text" class="form-control group" size="8" ng-model="cliente.cep" placeholder="CEP" required mask-clean='true' mask='99.999-999'>
+                        <input type="hidden" name="cep" value="{{cliente.cep}}">
                     </div>
                     <div class="col-md-6 form-group">
                         <select class="form-control group" ng-model="cliente.uf" required>
@@ -208,10 +210,12 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 form-group">
-                        <input type="text" class="form-control group" size="5" name="ddd" ng-model="cliente.ddd" placeholder="DDD" mask-clean='true' mask='99'>
+                        <input type="text" class="form-control group" size="5" ng-model="cliente.ddd" placeholder="DDD" mask-clean='true' mask='99'>
+                        <input type="hidden" name="ddd" value="{{cliente.ddd}}">
                     </div>
                     <div class="col-md-9 form-group">
-                        <input type="text" class="form-control group" size="10" name="telefone" ng-model="cliente.telefone"  placeholder="Telefone" mask="9?9999-9999">
+                        <input type="text" class="form-control group" size="10"  ng-model="cliente.telefone"  placeholder="Telefone" mask="9?9999-9999">
+                        <input type="hidden" name="telefone" value="{{cliente.telefone}}">
                     </div>
                 </div>
                 <div class="row">
@@ -233,9 +237,9 @@
                 <!-- CGC/CPF Sacador:-->
                 <input name="numCGCCPFSacador" type="hidden"  size="25" value="{{boleto.numCGCCPFSacador}}" />
                 <!-- Quantidade Monetária: -->
-                <input name="qntMonetaria" type="hidden"  size="5" value="{{boleto.valor}}" />
+                <input name="qntMonetaria" type="hidden"  size="5" value="{{categoria[categoriaId].valor}}" />
                 <!-- Valor título:-->
-                <input name="valorTitulo" type="hidden"  size="5" value="{{boleto.valor}}" />
+                <input name="valorTitulo" type="hidden"  size="5" value="{{categoria[categoriaId].valor}}" />
                 <!-- Código tipo vencimento:-->
                 <input name="codTipoVencimento" type="hidden"  value="1" size="5" value="{{boleto.codTipoVencimento}}" />
                 <!-- Data vencimento:-->
@@ -265,9 +269,9 @@
                 <!-- Instrução 4:-->
                 <input name="descInstrucao4" type="hidden"  size="25" value="{{boleto.descInstrucao3}}" />
                 <!-- Instrução 3: -->
-                <input name="descInstrucao3" type="hidden"  size="25" value="{{boleto.descInstrucao4}}" />
+                <input name="descInstrucao3" type="hidden"  size="25" value="CPF: {{cliente.cpf}}" />
                 <!-- Instrução 5: -->
-                <input name="descInstrucao5" type="hidden"  size="25" value="{{boleto.descInstrucao5}}" />
+                <input name="descInstrucao5" type="hidden"  size="25" value="{{categoria[categoriaId].label}}" />
             </form>
             <div class="row" style="margin-bottom: 20px">
                 <div class="col-md-12">

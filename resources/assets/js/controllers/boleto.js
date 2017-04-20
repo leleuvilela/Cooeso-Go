@@ -24,6 +24,14 @@ angular.module('app.controllers')
 
         vencimento = getStringDate(vencimento);
 
+        $scope.cliente = new Client();
+        $scope.categoria = [
+            {id: 0, label: 'MÉDICOS ACIMA DE 70 ANOS', valor:'0'},
+            {id: 1, label: 'MÉDICOS', valor:'200'},
+            {id: 2, label: 'RESIDENTES E FELLOWS', valor:'150'},
+            {id: 3, label: 'ACADÊMICOS', valor:'80'}
+        ];
+
         $scope.boleto = {
             numCliente: "145025",
             coopCartao: "5004",
@@ -37,14 +45,14 @@ angular.module('app.controllers')
             codTipoVencimento: "1",
             bolAceite: "1",
             numCGCCPFSacador: "19213714000106",
+            valor: "",
             dataVencimentoTit: vencimento,
-            descInstrucao1: "bla lba bla",
-            descInstrucao2: "blabl",
-            descInstrucao3: "asdf",
-            descInstrucao4: "asasdfdf",
-            descInstrucao5: "asdfasdf"
+            descInstrucao1: "3 CONGRESSO DE OFTAMOLOGIA DA UFG",
+            descInstrucao2: "9 E 10 DE JUNHO 2017",
+            descInstrucao3: "AUDITORIO CREMEGO, GOIANIA",
+            descInstrucao4: "CPF: "+$scope.cliente.cpf,
+            descInstrucao5: ""
         };
-        $scope.cliente = new Client();
 
         $scope.data_nascimento = {
             status:{
@@ -60,10 +68,11 @@ angular.module('app.controllers')
         $scope.enviar = function(){
             $scope.cliente.data_nascimento_validada = getStringDate($scope.cliente.data_nascimento);
             console.log($scope.cliente);
+            $scope.boleto.valor = $scope.categoria[$scope.categoriaId].valor;
+            $scope.boleto.descInstrucao5 = $scope.categoria[$scope.categoriaId].label;
             if ($scope.formBoleto.$valid){
-                $scope.cliente.$save().then(function () {
-                    document.getElementById("formBoleto").submit();
-                });
+                document.getElementById("formBoleto").submit();
+                $scope.cliente.$save();
             }
         }
 

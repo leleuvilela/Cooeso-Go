@@ -18,7 +18,7 @@ class CreateClientsTable extends Migration
             $table->string('nome_cracha');
             $table->string('email');
             $table->string('cpf');
-            $table->string('rg');
+            $table->integer('categoria');
             $table->integer('num_conselho');
             $table->string('uf_conselho');
             $table->integer('prescritor');
