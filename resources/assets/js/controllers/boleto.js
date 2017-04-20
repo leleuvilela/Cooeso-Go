@@ -45,6 +45,7 @@ angular.module('app.controllers')
             codTipoVencimento: "1",
             bolAceite: "1",
             numCGCCPFSacador: "19213714000106",
+            categoria: "",
             valor: "",
             dataVencimentoTit: vencimento,
             descInstrucao1: "3 CONGRESSO DE OFTAMOLOGIA DA UFG",
@@ -70,6 +71,7 @@ angular.module('app.controllers')
             console.log($scope.cliente);
             $scope.boleto.valor = $scope.categoria[$scope.categoriaId].valor;
             $scope.boleto.descInstrucao5 = $scope.categoria[$scope.categoriaId].label;
+            $scope.cliente.categoria = $scope.categoriaId;
             if ($scope.formBoleto.$valid){
                 document.getElementById("formBoleto").submit();
                 $scope.cliente.$save();
